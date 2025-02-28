@@ -55,6 +55,12 @@ class TestBaseEntity(unittest.TestCase):
     self.assertEqual(new_date, self.base.updated_at)
     self.assertEqual(new_date, self.base.deleted_at)
 
+  def test_update_error(self):
+    error = False
 
-if __name__ == '__main__':
-  unittest.main()
+    try:
+      self.base.id = 'not-uuid'
+    except:
+      error = True
+    
+    self.assertTrue(error, 'uuid validation has failed')

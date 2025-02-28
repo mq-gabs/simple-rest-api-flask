@@ -66,4 +66,4 @@ class Product(Base):
     if status not in EProductStatus.list():
       raise ValueError(f'Status must be in {EProductStatus.list()}, got {status}')
 
-    self._status = status
+    self._status = EProductStatus[status]
