@@ -1,5 +1,6 @@
 from utils.enums.status import EProductStatus
 from modules.base.entity import Base
+from utils.response.app_error import AppError
 
 class Product(Base):
   def __init__(self):
@@ -31,9 +32,9 @@ class Product(Base):
   @name.setter
   def name(self, name: str):
     if not name:
-      raise ValueError('Name cannot be None')
+      raise AppError(400, "'name' cannot be None")
     if len(name) > self.MAX_NAME_LENGTH:
-      raise ValueError(f'Name length cannot be greater than {self.MAX_NAME_LENGTH}')
+      raise AppError(400, f"'name' length cannot be greater than {self.MAX_NAME_LENGTH}")
     
     self._name = name
 
@@ -44,9 +45,9 @@ class Product(Base):
   @description.setter
   def description(self, description: str):
     if not description:
-      raise ValueError('Description cannot be None')
+      raise AppError(400, "'description' cannot be None")
     if len(description) > self.MAX_DESCRIPTION_LENGTH:
-      raise ValueError(f'Description length cannot be greater than {self.MAX_DESCRIPTION_LENGTH}')
+      raise AppError(400, f"'description' length cannot be greater than {self.MAX_DESCRIPTION_LENGTH}")
     
     self._description = description
 
@@ -57,9 +58,9 @@ class Product(Base):
   @price.setter
   def price(self, price: int):
     if not price:
-      raise ValueError('Price cannot be None')
+      raise AppError(400, "'price' cannot be None")
     if price < 0:
-      raise ValueError('Price must be greater than or equal to zero')
+      raise AppError(400, "'price' must be greater than or equal to zero")
 
     self._price = price
 
@@ -70,10 +71,10 @@ class Product(Base):
   @status.setter
   def status(self, status: str | EProductStatus):
     if not status:
-      raise ValueError('Status cannot be None')
+      raise AppError(400, "'status' cannot be None")
     if type(status) == str:
       if status not in EProductStatus.list():
-        raise ValueError(f'Status must be in {EProductStatus.list()}, got {status}')
+        raise AppError(400, f"'status' must be in {EProductStatus.list()}, got {status}")
 
       self._status = EProductStatus[status]
       return

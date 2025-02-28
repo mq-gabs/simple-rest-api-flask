@@ -1,5 +1,5 @@
 from modules.database.repository.abstract.products import AbstractProductsRepository
-from utils.response.error import AppError
+from utils.response.app_error import AppError
 from datetime import datetime
 from modules.products.entity import Product
 from utils.request.query import Query
@@ -13,12 +13,13 @@ class ProductsMemoryRepository(AbstractProductsRepository):
     return product
 
   def get_many(self, query: Query) -> ListResponse:
-    return ListResponse(self.products, len(self.products))
+    products = [prod for prod in self.products if not prod.deleted_at]
+    return ListResponse(products, len(products))
 
   def get_one(self, id: str) -> Product:
     found_product = None
     for product in self.products:
-      if product.id == id and not product.deleted_at:
+      if product.id == id and product.deleted_at == None:
         found_product = product
 
     return found_product

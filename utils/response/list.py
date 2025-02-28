@@ -5,6 +5,6 @@ class ListResponse:
 
   def toJSON(self):
     return {
-      "total": self.count,
+      "total": self.total,
       "list": [item.toJSON() for item in self.list]
     }

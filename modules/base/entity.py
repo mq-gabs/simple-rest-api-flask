@@ -1,5 +1,6 @@
 from datetime import datetime
 import uuid
+from utils.response.app_error import AppError
 
 class Base:
   def __init__(self):
@@ -32,7 +33,7 @@ class Base:
   @id.setter
   def id(self, id: str):
     if not self._is_valid_uuid(id):
-      raise TypeError(f'{id} is not valid UUID')
+      raise AppError(400, f'\"{id}\" is not valid UUID')
 
     self._id = id
   

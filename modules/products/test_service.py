@@ -16,6 +16,7 @@ class TestProductsServices(unittest.TestCase):
     dto = ProductDto()
     dto.name = 'Name'
     dto.description = 'Description'
+    dto.price = 1200
 
     result = self.service.create(dto)
 
@@ -27,6 +28,7 @@ class TestProductsServices(unittest.TestCase):
     dto = ProductDto()
     dto.name = 'Name'
     dto.description = 'Description'
+    dto.price = 1200
 
     product = self.service.create(dto)
 
@@ -40,6 +42,7 @@ class TestProductsServices(unittest.TestCase):
     dto = ProductDto()
     dto.name = 'Name'
     dto.description = 'Description'
+    dto.price = 1200
 
     product = self.service.create(dto)
 
@@ -51,6 +54,7 @@ class TestProductsServices(unittest.TestCase):
     dto = ProductDto()
     dto.name = 'Name'
     dto.description = 'Description'
+    dto.price = 1200
 
     product = self.service.create(dto)
 
@@ -67,13 +71,16 @@ class TestProductsServices(unittest.TestCase):
     dto = ProductDto()
     dto.name = 'Name'
     dto.description = 'Description'
+    dto.price = 1200
 
     product = self.service.create(dto)
 
     self.service.delete(product.id)
 
-    result = self.service.get_one(product.id)
+    error = False
+    try:
+      self.service.get_one(product.id)
+    except:
+      error = True
 
-    self.assertEqual(result, None)
-
-
+    self.assertTrue(error)
