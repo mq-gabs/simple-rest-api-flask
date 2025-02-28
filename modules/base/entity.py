@@ -7,6 +7,8 @@ class Base:
     self._created_at: datetime = datetime.now().__str__()
     self._updated_at: datetime = datetime.now().__str__()
     self._deleted_at: datetime = None
+    
+    self.DATE_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 
   def toJSON(self) -> dict:
     return {
