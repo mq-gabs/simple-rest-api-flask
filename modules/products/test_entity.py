@@ -36,7 +36,7 @@ class TestProductEntity(unittest.TestCase):
     self.product.name = new_name
     self.product.description = new_description
     self.product.price = new_price
-    self.product.status = new_status.name
+    self.product.status = new_status
 
     self.assertEqual(new_name, self.product.name)
     self.assertEqual(new_description, self.product.description)

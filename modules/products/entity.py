@@ -4,8 +4,8 @@ from modules.base.entity import Base
 class Product(Base):
   def __init__(self):
     super().__init__()
-    self._name: str = None
-    self._description: str = None
+    self._name: str = ''
+    self._description: str = ''
     self._price: int = 0 
     self._status: EProductStatus = EProductStatus.AVAILABLE
 
@@ -62,8 +62,13 @@ class Product(Base):
     return self._status
   
   @status.setter
-  def status(self, status: str):
-    if status not in EProductStatus.list():
-      raise ValueError(f'Status must be in {EProductStatus.list()}, got {status}')
+  def status(self, status: str | EProductStatus):
+    if type(status) == str:
+      if status not in EProductStatus.list():
+        raise ValueError(f'Status must be in {EProductStatus.list()}, got {status}')
 
-    self._status = EProductStatus[status]
+      self._status = EProductStatus[status]
+      return
+    
+    self._status = status
+
