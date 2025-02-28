@@ -1,0 +1,6 @@
+from utils.enums.status import EProductStatus
+
+class ProductDto:
+  name: str = None
+  description: str = None
+  status: EProductStatus = None

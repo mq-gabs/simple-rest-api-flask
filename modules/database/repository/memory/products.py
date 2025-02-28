@@ -18,39 +18,29 @@ class ProductsMemoryRepository(AbstractProductsRepository):
   def get_one(self, id: str) -> Product:
     found_product = None
     for product in self.products:
-      if product.id == id:
+      if product.id == id and not product.deleted_at:
         found_product = product
-    
-    if not found_product:
-      raise AppError(404, f'Product not found with id: {id}')
-    
+
     return found_product
 
   def update(self, id: str, updated: Product) -> Product:
-    updated_product = self.get_one(id)
-
-    updated_product.name = updated.name
-    updated_product.description = updated.description
-    updated_product.status = updated.status
-    updated_product.updated_at = str(datetime.now())
-
     new_products = []
     for product in self.products:
       if product.id == id:
-        new_products.append(updated_product)
+        new_products.append(updated)
       else:
         new_products.append(product)
     
     self.products = new_products.copy()
 
-    return updated_product
+    return updated
 
   def delete(self, id: str):
-    self.get_one(id)
-
     new_products = []
     for product in self.products:
       if product.id == id:
         product.deleted_at = str(datetime.now())
       new_products.append(product)
+
+    self.products = new_products.copy()
     
